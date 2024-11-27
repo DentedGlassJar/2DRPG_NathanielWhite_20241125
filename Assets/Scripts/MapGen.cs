@@ -47,11 +47,11 @@ public class MapGen : MonoBehaviour
     // A vector3Int that is the position of the player
     Vector3Int playerPosition;
 
-    // A vector3Int that is the new position of that player whenever they move
-    Vector3Int newPlayerPosition;
-
     // A vector3Int that is the position of the enemy
     Vector3Int enemyPosition;
+
+    // A vector3Int that is the new position of that player whenever they move
+    Vector3Int newPlayerPosition;
 
     // A vector3Int that is the new position of that enemy whenever they move
     Vector3Int newEnemyPosition;
@@ -77,7 +77,8 @@ public class MapGen : MonoBehaviour
             isTileWalkable = false;
         }
 
-        playerPosition = new Vector3Int(7, 4, 0);
+        playerPosition = new Vector3Int(2, 2, 0);
+        enemyPosition = new Vector3Int(7, 6, 0);
         isChestCreated = false;
 
         //LoadPremadeMap(File.ReadAllLines(pathToMapFile);
@@ -90,6 +91,7 @@ public class MapGen : MonoBehaviour
     private void Update()
     {
         PlayerMovement();
+        EnemyMovement();
     }
 
     private void PlayerMovement()
@@ -156,6 +158,11 @@ public class MapGen : MonoBehaviour
                 playerPosition = newPlayerPosition;
             }
         }
+    }
+
+    private void EnemyMovement()
+    {
+        tilemap.SetTile(enemyPosition, enemyTile);
     }
 
     // Returns a string of a generated map
