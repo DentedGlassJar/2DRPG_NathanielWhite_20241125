@@ -8,11 +8,14 @@ public class MapGen : MonoBehaviour
     //string pathToMapFile = $"{Application.dataPath}/textFile/textFileMap.txt";
 
     // The sprites used for the mapTiles
+    public GameObject playerGameObject;
+
     public Tilemap tilemap;
     public TileBase playerTile;
     public TileBase wallTile;
     public TileBase doorTile;
     public TileBase chestTile;
+    public TileBase enemyTile;
 
     // The size for the map
     int width = 15;
@@ -41,15 +44,24 @@ public class MapGen : MonoBehaviour
     // A bool that returns true if a valid map has been created
     bool isMapPremade = false;
 
-    // A vector3int that is the position of the player
+    // A vector3Int that is the position of the player
     Vector3Int playerPosition;
 
-    // A vector3int that is the new position of that player whenever they move
+    // A vector3Int that is the new position of that player whenever they move
     Vector3Int newPlayerPosition;
+
+    // A vector3Int that is the position of the enemy
+    Vector3Int enemyPosition;
+
+    // A vector3Int that is the new position of that enemy whenever they move
+    Vector3Int newEnemyPosition;
 
     // Start is called before the first frame update
     void Start()
     {
+        numOfDoors = 0;
+        isDoorsCreated = false;
+
         if (tilemap == wallTile)
         {
             isTileWalkable = false;
@@ -67,9 +79,6 @@ public class MapGen : MonoBehaviour
 
         playerPosition = new Vector3Int(7, 4, 0);
         isChestCreated = false;
-
-        numOfDoors = 0;
-        isDoorsCreated = false;
 
         //LoadPremadeMap(File.ReadAllLines(pathToMapFile);
         GenerateMapString();
