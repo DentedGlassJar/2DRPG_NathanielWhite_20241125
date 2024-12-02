@@ -7,11 +7,7 @@ public class MapGen : MonoBehaviour
 {
     //string pathToMapFile = $"{Application.dataPath}/textFile/textFileMap.txt";
 
-    // The sprites used for the mapTiles
-    public GameObject playerGameObject;
-
     public Tilemap tilemap;
-    public TileBase playerTile;
     public TileBase wallTile;
     public TileBase doorTile;
     public TileBase chestTile;
@@ -44,14 +40,8 @@ public class MapGen : MonoBehaviour
     // A bool that returns true if a valid map has been created
     bool isMapPremade = false;
 
-    // A vector3Int that is the position of the player
-    Vector3Int playerPosition;
-
     // A vector3Int that is the position of the enemy
     Vector3Int enemyPosition;
-
-    // A vector3Int that is the new position of that player whenever they move
-    Vector3Int newPlayerPosition;
 
     // A vector3Int that is the new position of that enemy whenever they move
     Vector3Int newEnemyPosition;
@@ -62,22 +52,6 @@ public class MapGen : MonoBehaviour
         numOfDoors = 0;
         isDoorsCreated = false;
 
-        if (tilemap == wallTile)
-        {
-            isTileWalkable = false;
-        }
-
-        if (tilemap == chestTile)
-        {
-            isTileWalkable = false;
-        }
-
-        if (tilemap == doorTile)
-        {
-            isTileWalkable = false;
-        }
-
-        playerPosition = new Vector3Int(2, 2, 0);
         enemyPosition = new Vector3Int(7, 6, 0);
         isChestCreated = false;
 
@@ -90,76 +64,11 @@ public class MapGen : MonoBehaviour
 
     private void Update()
     {
-        PlayerMovement();
+
         EnemyMovement();
     }
 
-    private void PlayerMovement()
-    {
-        tilemap.SetTile(playerPosition, playerTile);
-
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (isTileWalkable == false)
-            {
-                tilemap.SetTile(playerPosition, null);
-                newPlayerPosition = playerPosition + Vector3Int.left;
-                playerPosition = newPlayerPosition;
-            }
-            else
-            {
-                newPlayerPosition = playerPosition;
-                playerPosition = newPlayerPosition;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            if (isTileWalkable == false)
-            {
-                tilemap.SetTile(playerPosition, null);
-                newPlayerPosition = playerPosition + Vector3Int.up;
-                playerPosition = newPlayerPosition;
-            }
-            else
-            {
-                newPlayerPosition = playerPosition;
-                playerPosition = newPlayerPosition;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (isTileWalkable == false)
-            {
-                tilemap.SetTile(playerPosition, null);
-                newPlayerPosition = playerPosition + Vector3Int.right;
-                playerPosition = newPlayerPosition;
-            }
-            else
-            {
-                newPlayerPosition = playerPosition;
-                playerPosition = newPlayerPosition;
-            }
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (isTileWalkable == false)
-            {
-                tilemap.SetTile(playerPosition, null);
-                newPlayerPosition = playerPosition + Vector3Int.down;
-                playerPosition = newPlayerPosition;
-            }
-            else
-            {
-                newPlayerPosition = playerPosition;
-                playerPosition = newPlayerPosition;
-            }
-        }
-    }
-
+    
     private void EnemyMovement()
     {
         tilemap.SetTile(enemyPosition, enemyTile);

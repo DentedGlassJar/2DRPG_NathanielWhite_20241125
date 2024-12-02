@@ -338,6 +338,7 @@ GameObject:
   - component: {fileID: 1125577510}
   - component: {fileID: 1125577509}
   - component: {fileID: 1125577511}
+  - component: {fileID: 1125577512}
   m_Layer: 0
   m_Name: PlayerPosition
   m_TagString: Untagged
@@ -425,6 +426,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthText: {fileID: 1502514731}
+--- !u!114 &1125577512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125577508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83a335663d9f2c94b91ef51a5a12794a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 1137079981}
+  playerTile: {fileID: 11400000, guid: caf1d881852ee864db4cd78393dfa097, type: 2}
 --- !u!1 &1137079978
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,9 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0c784d61505a814b82693ce5e71ba9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerGameObject: {fileID: 1125577508}
   tilemap: {fileID: 1137079981}
-  playerTile: {fileID: 11400000, guid: caf1d881852ee864db4cd78393dfa097, type: 2}
   wallTile: {fileID: 11400000, guid: 11e6a357ba8cbfa4fa251494a8004258, type: 2}
   doorTile: {fileID: 11400000, guid: c1ad89696c5500e4faf1696b43246158, type: 2}
   chestTile: {fileID: 11400000, guid: f1dcb729cbeab5e41a9ab8f79aafa60e, type: 2}
