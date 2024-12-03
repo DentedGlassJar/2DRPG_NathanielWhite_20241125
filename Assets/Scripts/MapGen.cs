@@ -56,14 +56,13 @@ public class MapGen : MonoBehaviour
         isChestCreated = false;
 
         //LoadPremadeMap(File.ReadAllLines(pathToMapFile);
+
         GenerateMapString();
-
-        ConvertMapToTileMap();
-
     }
 
     private void Update()
     {
+        ConvertMapToTileMap();
 
         EnemyMovement();
     }
