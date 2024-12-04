@@ -11,7 +11,7 @@ public class MapGen : MonoBehaviour
     public TileBase wallTile;
     public TileBase doorTile;
     public TileBase chestTile;
-    public TileBase enemyTile;
+
 
     // The size for the map
     int width = 15;
@@ -40,19 +40,12 @@ public class MapGen : MonoBehaviour
     // A bool that returns true if a valid map has been created
     bool isMapPremade = false;
 
-    // A vector3Int that is the position of the enemy
-    Vector3Int enemyPosition;
-
-    // A vector3Int that is the new position of that enemy whenever they move
-    Vector3Int newEnemyPosition;
-
     // Start is called before the first frame update
     void Start()
     {
         numOfDoors = 0;
         isDoorsCreated = false;
 
-        enemyPosition = new Vector3Int(7, 6, 0);
         isChestCreated = false;
 
         //LoadPremadeMap(File.ReadAllLines(pathToMapFile);
@@ -63,14 +56,6 @@ public class MapGen : MonoBehaviour
     private void Update()
     {
         ConvertMapToTileMap();
-
-        EnemyMovement();
-    }
-
-    
-    private void EnemyMovement()
-    {
-        tilemap.SetTile(enemyPosition, enemyTile);
     }
 
     // Returns a string of a generated map

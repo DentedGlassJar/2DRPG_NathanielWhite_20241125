@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,11 +13,18 @@ public class PlayerMovement : MonoBehaviour
     // The game object variable used to get the variables from the MapGen.cs script
     public GameObject tileMapObj;
 
+    // The game object variable used to get the variables from the EnemyScript.cs script
+    public GameObject enemyObj;
+
+    // References to different scripts
+    MapGen referenceMapGen;
+    EnemyScript referenceEnemyScript;
+
     // The variables that were taken from the MapGen.cs script
-    MapGen wallTile;
-    MapGen doorTile;
-    MapGen chestTile;
-    MapGen enemyTile;
+    TileBase wallTile;
+    TileBase doorTile;
+    TileBase chestTile;
+    TileBase enemyTile;
 
     // A vector3Int that is the position of the player
     Vector3Int playerPosition;
@@ -23,14 +32,24 @@ public class PlayerMovement : MonoBehaviour
     // A vector3Int that is the new position of that player whenever they move
     Vector3Int newPlayerPosition;
 
+    // A bool that turns true if you took your turn by moving or attacking
+    public bool isPlayerTurnOver;
+
     // Start is called before the first frame update
     void Start()
     {
-        // This function will get the MapGen.cs script of the TileMap GameObject
-        wallTile = tileMapObj.GetComponent<MapGen>();
-        doorTile = tileMapObj.GetComponent<MapGen>();
-        chestTile = tileMapObj.GetComponent<MapGen>();
-        enemyTile = tileMapObj.GetComponent<MapGen>();
+        referenceMapGen = tileMapObj.GetComponent<MapGen>();
+        referenceEnemyScript = enemyObj.GetComponent<EnemyScript>();
+
+        isPlayerTurnOver = false;
+
+        // This function will get references of tha variables in the MapGen.cs
+        wallTile = referenceMapGen.wallTile;
+        doorTile = referenceMapGen.doorTile;
+        chestTile = referenceMapGen.chestTile;
+
+
+        enemyTile = referenceEnemyScript.enemyTile;
 
         playerPosition = new Vector3Int(2, 2, 0);
     }
@@ -45,56 +64,61 @@ public class PlayerMovement : MonoBehaviour
     {
         tilemap.SetTile(playerPosition, playerTile);
 
-        // Makes the player go left if they press the A button
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            tilemap.SetTile(playerPosition, null);
-            newPlayerPosition = playerPosition + Vector3Int.left;
-            playerPosition = newPlayerPosition;
+        // Checks to see what the status of the isPlayerTurnOver bool is from the EnemyScript.cs file
+        isPlayerTurnOver = referenceEnemyScript.isPlayerTurnOver;
 
-            if (playerTile.Equals(wallTile || doorTile || chestTile))
+        if (isPlayerTurnOver == false)
+        {
+            // Makes the player go left if they press the A button
+            if (Input.GetKeyDown(KeyCode.A))
             {
-                playerPosition += Vector3Int.right;
-            }
-        }
+                tilemap.SetTile(playerPosition, null);
+                newPlayerPosition = playerPosition + Vector3Int.left;
+                playerPosition = newPlayerPosition;
 
-        // Makes the player go up if they press the W button
-        if (Input.GetKeyDown(KeyCode.W))
-        {
+                isPlayerTurnOver = true;
+                Debug.Log("Player's turn is over, Enemy's turn starts now");
+            }
+
+            // Makes the player go up if they press the W button
+            if (Input.GetKeyDown(KeyCode.W))
+            {
                 tilemap.SetTile(playerPosition, null);
                 newPlayerPosition = playerPosition + Vector3Int.up;
                 playerPosition = newPlayerPosition;
 
-            if (playerTile.Equals(wallTile || doorTile || chestTile))
-            {
-                playerPosition += Vector3Int.down;
+                isPlayerTurnOver = true;
+                Debug.Log("Player's turn is over, Enemy's turn starts now");
             }
+
+            // Makes the player go right if they press the D button
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                tilemap.SetTile(playerPosition, null);
+                newPlayerPosition = playerPosition + Vector3Int.right;
+                playerPosition = newPlayerPosition;
+
+                isPlayerTurnOver = true;
+                Debug.Log("Player's turn is over, Enemy's turn starts now");
+            }
+
+            // Makes the player go down if they press the S button
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                tilemap.SetTile(playerPosition, null);
+                newPlayerPosition = playerPosition + Vector3Int.down;
+                playerPosition = newPlayerPosition;
+
+                isPlayerTurnOver = true;
+                Debug.Log("Player's turn is over, Enemy's turn starts now");
+            }
+
         }
 
-        // Makes the player go right if they press the D button
-        if (Input.GetKeyDown(KeyCode.D))
+        // Makes the game restart if they press the R Button
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            tilemap.SetTile(playerPosition, null);
-            newPlayerPosition = playerPosition + Vector3Int.right;
-            playerPosition = newPlayerPosition;
-
-            if (playerTile.Equals(wallTile || doorTile || chestTile))
-            {
-                playerPosition += Vector3Int.left;
-            }
-        }
-
-        // Makes the player go down if they press the S button
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            tilemap.SetTile(playerPosition, null);
-            newPlayerPosition = playerPosition + Vector3Int.down;
-            playerPosition = newPlayerPosition;
-
-            if (playerTile.Equals(wallTile || doorTile || chestTile))
-            {
-                playerPosition += Vector3Int.up;
-            }
+            SceneManager.LoadScene("SampleScene");
         }
     }
 
