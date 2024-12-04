@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     TileBase enemyTile;
 
     // A vector3Int that is the position of the player
-    Vector3Int playerPosition;
+    public Vector3Int playerPosition;
 
     // A vector3Int that is the new position of that player whenever they move
     Vector3Int newPlayerPosition;
