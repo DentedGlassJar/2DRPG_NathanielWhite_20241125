@@ -75,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
                 tilemap.SetTile(playerPosition, null);
                 newPlayerPosition = playerPosition + Vector3Int.left;
                 playerPosition = newPlayerPosition;
+                new WaitForSeconds(1);
 
                 isPlayerTurnOver = true;
                 Debug.Log("Player's turn is over, Enemy's turn starts now");
@@ -86,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
                 tilemap.SetTile(playerPosition, null);
                 newPlayerPosition = playerPosition + Vector3Int.up;
                 playerPosition = newPlayerPosition;
+                new WaitForSeconds(1);
 
                 isPlayerTurnOver = true;
                 Debug.Log("Player's turn is over, Enemy's turn starts now");
@@ -97,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
                 tilemap.SetTile(playerPosition, null);
                 newPlayerPosition = playerPosition + Vector3Int.right;
                 playerPosition = newPlayerPosition;
+                new WaitForSeconds(1);
 
                 isPlayerTurnOver = true;
                 Debug.Log("Player's turn is over, Enemy's turn starts now");
@@ -108,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
                 tilemap.SetTile(playerPosition, null);
                 newPlayerPosition = playerPosition + Vector3Int.down;
                 playerPosition = newPlayerPosition;
+                new WaitForSeconds(1);
 
                 isPlayerTurnOver = true;
                 Debug.Log("Player's turn is over, Enemy's turn starts now");

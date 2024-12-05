@@ -61,7 +61,7 @@ public class EnemyScript : MonoBehaviour
 
     private void LateUpdate()
     {
-        EnemyAttack();
+        Attack();
         EnemyMovement();
     }
 
@@ -82,6 +82,7 @@ public class EnemyScript : MonoBehaviour
             {
                 newEnemyPosition = enemyPosition + Vector3Int.right;
                 enemyPosition = newEnemyPosition;
+                new WaitForSeconds(1);
                 isPlayerTurnOver = false;
             }
 
@@ -90,6 +91,7 @@ public class EnemyScript : MonoBehaviour
             {
                 newEnemyPosition = enemyPosition + Vector3Int.left;
                 enemyPosition = newEnemyPosition;
+                new WaitForSeconds(1);
                 isPlayerTurnOver = false;
             }
 
@@ -98,6 +100,7 @@ public class EnemyScript : MonoBehaviour
             {
                 newEnemyPosition = enemyPosition + Vector3Int.down;
                 enemyPosition = newEnemyPosition;
+                new WaitForSeconds(1);
                 isPlayerTurnOver = false;
             }
 
@@ -106,13 +109,15 @@ public class EnemyScript : MonoBehaviour
             {
                 newEnemyPosition = enemyPosition + Vector3Int.up;
                 enemyPosition = newEnemyPosition;
+                new WaitForSeconds(1);
+
                 isPlayerTurnOver = false;
             }
             Debug.Log("Enemy's turn is over, Player's turn starts now");
         }
     }
 
-    private void EnemyAttack()
+    private void Attack()
     {
         currentHealth = referenceHealthSystem.currentHealth;
 
@@ -126,6 +131,8 @@ public class EnemyScript : MonoBehaviour
 
                 currentHealth = currentHealth - enemyDamage;
                 referenceHealthSystem.currentHealth = currentHealth;
+
+                new WaitForSeconds(1);
 
                 isPlayerTurnOver = false;
             }
@@ -143,6 +150,9 @@ public class EnemyScript : MonoBehaviour
                     winTextObj.SetActive(true);
                     return;
                 }
+
+                new WaitForSeconds(1);
+
                 isPlayerTurnOver = true;
             }
         }
