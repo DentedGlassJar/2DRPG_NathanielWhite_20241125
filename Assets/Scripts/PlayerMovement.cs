@@ -112,7 +112,6 @@ public class PlayerMovement : MonoBehaviour
                 isPlayerTurnOver = true;
                 Debug.Log("Player's turn is over, Enemy's turn starts now");
             }
-
         }
 
         // Makes the game restart if they press the R Button

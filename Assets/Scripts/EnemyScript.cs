@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -14,8 +15,15 @@ public class EnemyScript : MonoBehaviour
     // The gameobject of the playerPosition
     public GameObject playerObj;
 
+    public GameObject winTextObj;
+
     // The referenced script of PlayerMovement.cs
     PlayerMovement referencePlayerMovement;
+
+    // The referenced script of HealthSystem.cs
+    HealthSystem referenceHealthSystem;
+
+    int enemyHealth;
 
     // A vector3Int that is the position of the enemy
     Vector3Int enemyPosition;
@@ -26,22 +34,34 @@ public class EnemyScript : MonoBehaviour
     // A vector3Int that is the position of the player
     Vector3Int playerPosition;
 
+    public int currentHealth;
+
     // A bool that turns true if the player took their turn by moving or attacking
     public bool isPlayerTurnOver;
+
+    private int enemyDamage = 100;
+    private int maxHealth = 100;
+    private int minHealth = 0;
+
+    private int playerDamage;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        // This function gets the components of the PlayerMovement script.
+        // This function gets the components of the PlayerMovement script
+        referenceHealthSystem = playerObj.GetComponent<HealthSystem>();
+
+        // This function gets the components of the HealthSystem script
         referencePlayerMovement = playerObj.GetComponent<PlayerMovement>();
 
         enemyPosition = new Vector3Int(7, 6, 0);
     }
 
-    private void Update()
+    private void LateUpdate()
     {
+        EnemyAttack();
         EnemyMovement();
     }
 
@@ -55,7 +75,6 @@ public class EnemyScript : MonoBehaviour
 
         if (isPlayerTurnOver == true)
         {
-            Debug.Log("Player's turn is over, Enemy's turn starts now");
             tilemap.SetTile(enemyPosition, null);
 
             // If the enemy is to the left of the player, the enemy moves right
@@ -63,6 +82,7 @@ public class EnemyScript : MonoBehaviour
             {
                 newEnemyPosition = enemyPosition + Vector3Int.right;
                 enemyPosition = newEnemyPosition;
+                isPlayerTurnOver = false;
             }
 
             // If the enemy is to the right of the player, the enemy moves left
@@ -70,6 +90,7 @@ public class EnemyScript : MonoBehaviour
             {
                 newEnemyPosition = enemyPosition + Vector3Int.left;
                 enemyPosition = newEnemyPosition;
+                isPlayerTurnOver = false;
             }
 
             // If the enemy is to the top of the player, the enemy moves down
@@ -77,6 +98,7 @@ public class EnemyScript : MonoBehaviour
             {
                 newEnemyPosition = enemyPosition + Vector3Int.down;
                 enemyPosition = newEnemyPosition;
+                isPlayerTurnOver = false;
             }
 
             // If the enemy is to the bottom of the player, the enemy moves up
@@ -84,10 +106,45 @@ public class EnemyScript : MonoBehaviour
             {
                 newEnemyPosition = enemyPosition + Vector3Int.up;
                 enemyPosition = newEnemyPosition;
+                isPlayerTurnOver = false;
             }
-
-            isPlayerTurnOver = false;
             Debug.Log("Enemy's turn is over, Player's turn starts now");
+        }
+    }
+
+    private void EnemyAttack()
+    {
+        currentHealth = referenceHealthSystem.currentHealth;
+
+        if (enemyPosition == playerPosition)
+        {
+            Debug.Log($"{enemyPosition} is equal to {playerPosition}");
+            if(isPlayerTurnOver == true)
+            {
+                Debug.Log("Player turn over is true");
+                enemyDamage = Random.Range(1, 16);
+
+                currentHealth = currentHealth - enemyDamage;
+                referenceHealthSystem.currentHealth = currentHealth;
+
+                isPlayerTurnOver = false;
+            }
+            else
+            {
+                enemyHealth = Mathf.Clamp(enemyHealth, minHealth, maxHealth);
+                Debug.Log("Player turn over is false");
+                playerDamage = Random.Range(1, 21);
+
+                enemyHealth = enemyHealth - playerDamage;
+                Debug.Log($"Enemy Health is {enemyHealth}");
+
+                if(enemyHealth <= 0)
+                {
+                    winTextObj.SetActive(true);
+                    return;
+                }
+                isPlayerTurnOver = true;
+            }
         }
     }
 }

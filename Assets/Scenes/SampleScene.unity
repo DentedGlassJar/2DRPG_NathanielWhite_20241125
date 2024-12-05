@@ -360,6 +360,7 @@ MonoBehaviour:
   tilemap: {fileID: 1137079981}
   enemyTile: {fileID: 11400000, guid: f2d7599a938b1394382768b4a6405094, type: 2}
   playerObj: {fileID: 1125577508}
+  currentHealth: 0
   isPlayerTurnOver: 0
 --- !u!212 &783766807
 SpriteRenderer:
@@ -527,6 +528,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthText: {fileID: 1502514731}
+  enemyObj: {fileID: 783766805}
+  currentHealth: 100
 --- !u!114 &1125577512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -543,6 +546,7 @@ MonoBehaviour:
   playerTile: {fileID: 11400000, guid: caf1d881852ee864db4cd78393dfa097, type: 2}
   tileMapObj: {fileID: 1137079978}
   enemyObj: {fileID: 783766805}
+  playerPosition: {x: 0, y: 0, z: 0}
   isPlayerTurnOver: 0
 --- !u!1 &1137079978
 GameObject:

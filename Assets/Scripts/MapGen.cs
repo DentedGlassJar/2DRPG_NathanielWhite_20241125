@@ -207,9 +207,4 @@ public class MapGen : MonoBehaviour
             }
         }
     }
-
-    // Loads a pre-made map from a text assets
-    void LoadPremadeMap(string mapFilePath)
-    {
-    }
 }
